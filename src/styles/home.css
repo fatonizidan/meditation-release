@@ -13,9 +13,9 @@
   inset: 0;
   background-size: cover;
   background-position: center;
-  transform: scale(1);
-  transition: background-image 2s ease-in-out;
-}
+  transform: scale(1.5);
+  transition: background-image 4s ease-in-out;
+  }
 
 /* OVERLAY SOFT */
 .home-overlay {

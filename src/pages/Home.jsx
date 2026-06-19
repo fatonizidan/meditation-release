@@ -14,7 +14,7 @@ export default function Home({ setPage }) {
   useEffect(() => {
     const interval = setInterval(() => {
       setBg((prev) => (prev + 1) % backgrounds.length);
-    }, 4000);
+    }, 6000);
 
     return () => clearInterval(interval);
   }, []);
