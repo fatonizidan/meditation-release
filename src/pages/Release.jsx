@@ -1,46 +1,76 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-export default function Release({ message, setPage }) {
-  const [animate, setAnimate] = useState(false);
-
+export default function Release({ message, setPage, audioRef }) {
   useEffect(() => {
-    const drop = new Audio("/sounds/drop.mp3");
-    drop.volume = 0.6;
-    drop.play().catch(() => {});
+    const audio = audioRef?.current?.drop;
+    if (!audio) return;
 
-    const start = setTimeout(() => {
-      setAnimate(true);
-    }, 1000);
+    audio.currentTime = 0;
 
-    const timer = setTimeout(() => {
+    const handleEnd = () => {
       setPage("meditation");
-    }, 8000);
+    };
+
+    audio.addEventListener("ended", handleEnd);
+
+    const playSound = async () => {
+      try {
+        await audio.play();
+      } catch (err) {
+        console.log("Autoplay blocked:", err);
+      }
+    };
+
+    playSound();
 
     return () => {
-      clearTimeout(start);
-      clearTimeout(timer);
+      audio.removeEventListener("ended", handleEnd);
     };
-  }, [setPage]);
+  }, [audioRef, setPage]);
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-sky-100 to-blue-200 flex flex-col items-center justify-center px-6 overflow-hidden">
+    <div
+      className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden"
+      style={{
+        backgroundImage: "url('/backgrounds/forest.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* overlay soft biar tenang */}
+      <div className="absolute inset-0 bg-black/40"></div>
 
-      <div
-        className={`
-          bg-white rounded-3xl shadow-xl p-8 max-w-md text-center
-          transition-all duration-1000 ease-in-out
-          ${animate ? "translate-y-40 opacity-0 scale-90" : ""}
-        `}
-      >
-        <p className="text-slate-700 italic">
-          {message || "Hari ini akan berlalu."}
+      {/* CONTENT */}
+      <div className="relative text-center max-w-lg text-white">
+
+        {/* ICON */}
+        <div className="text-5xl mb-4 animate-pulse">
+          🌬️
+        </div>
+
+        {/* TITLE */}
+        <h1 className="text-3xl font-semibold">
+          Releasing…
+        </h1>
+
+        {/* MESSAGE */}
+        <div className="mt-6 bg-white/10 border border-white/20 rounded-2xl p-6 backdrop-blur-md">
+          <p className="text-white/90 text-sm leading-relaxed">
+            {message || "Tidak ada pesan"}
+          </p>
+        </div>
+
+        {/* INFO */}
+        <p className="mt-5 text-white/70 text-xs">
+          Biarkan perasaanmu mengalir seperti angin…
         </p>
+
+        {/* NOTE */}
+        <p className="mt-3 text-white/50 text-[11px]">
+          Menunggu hingga proses pelepasan selesai...
+        </p>
+
       </div>
-
-      <p className="mt-10 text-slate-600 animate-pulse">
-        Biarkan semuanya mengalir...
-      </p>
-
     </div>
   );
-} 
+}

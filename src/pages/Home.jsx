@@ -1,18 +1,53 @@
+import "../styles/home.css";
+import { useState, useEffect } from "react";
+
 export default function Home({ setPage }) {
+  const backgrounds = [
+    "/backgrounds/beach.jpg",
+    "/backgrounds/forest.jpg",
+    "/backgrounds/night.jpg",
+    "/backgrounds/sky.jpg",
+  ];
+
+  const [bg, setBg] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBg((prev) => (prev + 1) % backgrounds.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="text-center mt-20">
-      <h1 className="text-4xl font-bold">Meditation Space 🌿</h1>
+    <div className="home">
 
-      <p className="text-gray-400 mt-3">
-        Tulis pikiranmu, lepaskan, lalu tenangkan diri
-      </p>
+      <div
+        className="home-bg"
+        style={{ backgroundImage: `url(${backgrounds[bg]})` }}
+      />
 
-      <button
-       onClick={() => setPage("reflection")}
-       className="mt-10 px-8 py-4 bg-sky-500 hover:bg-sky-600 text-white font-semibold rounded-full shadow-lg transition duration-300 hover:scale-105"
-    >
-       Begin Your Journey 🌿
-      </button>
+      <div className="home-overlay" />
+
+      <div className="home-content">
+
+        <p className="home-kicker">
+          Meditation Space 🌿
+        </p>
+
+        <p className="home-desc main-text">
+          Tulis pikiranmu, lepaskan, lalu tenangkan diri
+        </p>
+
+        <button
+          className="home-btn"
+          onClick={() => setPage("reflection")}
+        >
+          Begin Your Journey
+        </button>
+
+      </div>
+
     </div>
   );
 }

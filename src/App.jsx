@@ -1,67 +1,93 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
+import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Reflection from "./pages/Reflection";
 import Release from "./pages/Release";
 import Meditation from "./pages/Meditation";
 import About from "./pages/About";
-
-import Sidebar from "./components/Sidebar";
+import Navbar from "./components/Navbar";
 
 export default function App() {
+  // 🔐 LOGIN STATE (WAJIB DIPISAH DARI PAGE)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // 📄 PAGE SYSTEM (NAVIGASI UTAMA)
   const [page, setPage] = useState("home");
+
+  // ✍️ DATA REFLECTION
   const [message, setMessage] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
 
-  let currentPage;
+  // 🎧 AUDIO GLOBAL SYSTEM
+  const audioRef = useRef(null);
 
-  if (page === "home") {
-    currentPage = (
-      <Home setPage={setPage} />
-    );
+  if (!audioRef.current) {
+    audioRef.current = {
+      ambient: new Audio("/sounds/ambient.mp3"),
+      drop: new Audio("/sounds/drop.mp3"),
+    };
 
-  } else if (page === "reflection") {
-    currentPage = (
-      <Reflection
-        setPage={setPage}
-        setMessage={setMessage}
-      />
-    );
+    audioRef.current.ambient.loop = true;
+    audioRef.current.ambient.volume = 0.4;
 
-  } else if (page === "release") {
-    currentPage = (
-      <Release
-        message={message}
-        setPage={setPage}
-      />
-    );
-
-  } else if (page === "meditation") {
-    currentPage = (
-      <Meditation />
-    );
-
-  } else if (page === "about") {
-    currentPage = (
-      <About />
-    );
-
-  } else {
-    currentPage = (
-      <Home setPage={setPage} />
-    );
+    audioRef.current.drop.loop = false;
+    audioRef.current.drop.volume = 0.6;
   }
 
-  console.log("Page sekarang:", page);
-  return (
-    <div className="relative">
-      <Sidebar
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        setPage={setPage}
-      />
+  // 🔥 AUTO STOP SEMUA AUDIO KETIKA PINDAH PAGE
+  useEffect(() => {
+    const ambient = audioRef.current.ambient;
+    const drop = audioRef.current.drop;
 
-      {currentPage}
+    ambient.pause();
+    ambient.currentTime = 0;
+
+    drop.pause();
+    drop.currentTime = 0;
+  }, [page]);
+
+  // 🔐 LOGIN SCREEN (PASTI INI YANG MUNCUL DULU)
+  if (!isLoggedIn) {
+    return <Login setIsLoggedIn={setIsLoggedIn} />;
+  }
+
+  return (
+    <div className="app-container">
+
+      {/* NAVBAR */}
+      <Navbar setPage={setPage} />
+
+      {/* PAGES SYSTEM */}
+      {page === "home" && (
+        <Home setPage={setPage} />
+      )}
+
+      {page === "reflection" && (
+        <Reflection
+          setPage={setPage}
+          setMessage={setMessage}
+        />
+      )}
+
+      {page === "release" && (
+        <Release
+          message={message}
+          setPage={setPage}
+          audioRef={audioRef}
+        />
+      )}
+
+      {page === "meditation" && (
+        <Meditation
+          audioRef={audioRef}
+          setPage={setPage}
+        />
+      )}
+
+      {page === "about" && (
+        <About />
+      )}
+
     </div>
   );
 }

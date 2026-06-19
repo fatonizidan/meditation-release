@@ -1,0 +1,73 @@
+/* BASE */
+.home {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+/* BACKGROUND */
+.home-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1);
+  transition: background-image 2s ease-in-out;
+}
+
+/* OVERLAY SOFT */
+.home-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.38);
+}
+
+/* CONTENT */
+.home-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+/* MEDITATION SPACE */
+.home-kicker {
+  font-size: 35px;
+  letter-spacing: 4px;
+  opacity: 0.75;
+}
+
+/* MAIN TEXT (INI YANG KAMU SUKA) */
+.home-desc.main-text {
+  margin-top: 14px;
+  font-size: 11px;
+  line-height: 1.1;
+  max-width: 250px;
+  font-weight: 400;
+}
+
+/* BUTTON */
+.home-btn {
+  margin-top: 26px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255,255,255,0.95);
+  color: black;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.home-btn:hover {
+  transform: scale(1.05);
+}

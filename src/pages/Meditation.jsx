@@ -1,111 +1,130 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
-export default function Meditation() {
-  const [timeLeft, setTimeLeft] = useState(120);
-  const [isRunning, setIsRunning] = useState(false);
+export default function Meditation({ audioRef, setPage }) {
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [running, setRunning] = useState(false);
 
-  const audioRef = useRef(null);
-
-  // Timer
+  // TIMER
   useEffect(() => {
-    let timer;
+    let interval;
 
-    if (isRunning && timeLeft > 0) {
-      timer = setInterval(() => {
+    if (running && timeLeft > 0) {
+      interval = setInterval(() => {
         setTimeLeft((prev) => prev - 1);
       }, 1000);
     }
 
-    if (timeLeft === 0 && isRunning) {
-      setIsRunning(false);
+    if (timeLeft === 0 && running) {
+      setRunning(false);
 
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
+      const audio = audioRef?.current?.ambient;
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
       }
     }
 
-    return () => clearInterval(timer);
-  }, [isRunning, timeLeft]);
+    return () => clearInterval(interval);
+  }, [running, timeLeft]);
 
-  // Stop musik saat keluar dari halaman Meditation
-  useEffect(() => {
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-      }
-    };
-  }, []);
-
-  const startTimer = (seconds) => {
+  const startMeditation = (minutes) => {
+    const seconds = minutes * 60;
     setTimeLeft(seconds);
-    setIsRunning(true);
+    setRunning(true);
 
-    if (!audioRef.current) {
-      audioRef.current = new Audio("/sounds/ambient.mp3");
-      audioRef.current.volume = 0.4;
-      audioRef.current.loop = true;
+    const audio = audioRef?.current?.ambient;
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
     }
-
-    audioRef.current.currentTime = 0;
-
-    audioRef.current.play().catch((err) => {
-      console.log("Audio gagal diputar:", err);
-    });
   };
 
-  const formatTime = (sec) => {
-    const m = Math.floor(sec / 60);
-    const s = sec % 60;
+  const stop = () => {
+    setRunning(false);
+    setTimeLeft(0);
 
-    return `${m.toString().padStart(2, "0")}:${s
-      .toString()
-      .padStart(2, "0")}`;
+    const audio = audioRef?.current?.ambient;
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-blue-900 to-slate-950 flex flex-col items-center justify-center text-white px-6">
+    <div
+      className="min-h-screen flex items-center justify-center px-6 text-white relative overflow-hidden"
+      style={{
+        backgroundImage: "url('/backgrounds/night.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* overlay calm */}
+      <div className="absolute inset-0 bg-black/50"></div>
 
-      <h1 className="text-3xl font-bold">
-        🧘 Meditation Space
-      </h1>
+      {/* CONTENT */}
+      <div className="relative text-center">
 
-      <div className="mt-10 text-6xl font-mono">
-        {formatTime(timeLeft)}
-      </div>
+        {/* TITLE */}
+        <h1 className="text-3xl font-semibold tracking-wide">
+          Meditation
+        </h1>
 
-      {!isRunning && (
-        <div className="flex gap-4 mt-10">
-          <button
-            onClick={() => startTimer(120)}
-            className="bg-white text-black px-4 py-2 rounded-full"
-          >
-            2 Menit
-          </button>
-
-          <button
-            onClick={() => startTimer(300)}
-            className="bg-white text-black px-4 py-2 rounded-full"
-          >
-            5 Menit
-          </button>
-
-          <button
-            onClick={() => startTimer(600)}
-            className="bg-white text-black px-4 py-2 rounded-full"
-          >
-            10 Menit
-          </button>
+        {/* TIMER */}
+        <div className="mt-6 text-5xl font-mono tracking-wider">
+          {Math.floor(timeLeft / 60)
+            .toString()
+            .padStart(2, "0")}
+          :
+          {(timeLeft % 60).toString().padStart(2, "0")}
         </div>
-      )}
 
-      {timeLeft === 0 && (
-        <p className="mt-6 text-green-300">
-          🌿 Sesi selesai
+        {/* SUB TEXT */}
+        <p className="mt-3 text-white/70 text-sm leading-relaxed max-w-sm mx-auto">
+        Tidak apa-apa untuk berhenti sejenak.  
+        Di sini kamu aman, di sini kamu bisa tenang.  
+        Biarkan pikiranmu pelan-pelan mereda.
         </p>
-      )}
 
+        {/* BUTTON GROUP */}
+        {!running && (
+          <div className="flex gap-3 justify-center mt-8">
+
+            <button
+              onClick={() => startMeditation(2)}
+              className="px-4 py-2 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition"
+            >
+              2 min
+            </button>
+
+            <button
+              onClick={() => startMeditation(5)}
+              className="px-4 py-2 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition"
+            >
+              5 min
+            </button>
+
+            <button
+              onClick={() => startMeditation(10)}
+              className="px-4 py-2 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition"
+            >
+              10 min
+            </button>
+
+          </div>
+        )}
+
+        {/* STOP BUTTON */}
+        {running && (
+          <button
+            onClick={stop}
+            className="mt-8 px-6 py-2 rounded-full bg-red-500/80 hover:bg-red-500 transition"
+          >
+            Stop
+          </button>
+        )}
+
+      </div>
     </div>
   );
 }
