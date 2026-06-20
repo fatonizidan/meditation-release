@@ -15,7 +15,7 @@ return (
 <div
 className="min-h-screen flex items-center justify-center px-6 text-white relative overflow-hidden"
 style={{
-backgroundImage: "url('/backgrounds/sky.jpg')",
+backgroundImage: "url('/backgrounds/forest.jpg')",
 backgroundSize: "cover",
 backgroundPosition: "center",
 }}

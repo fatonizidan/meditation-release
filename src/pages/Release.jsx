@@ -1,65 +1,78 @@
-import { useEffect } from "react";
+import { useState } from "react";
 
 export default function Release({ message, setPage, audioRef }) {
-  useEffect(() => {
+  const [started, setStarted] = useState(false);
+
+  const startRelease = () => {
     const audio = audioRef?.current?.drop;
     if (!audio) return;
 
-    audio.pause();
+    setStarted(true);
+
     audio.currentTime = 0;
 
-    const playAndNavigate = async () => {
-      try {
-        await audio.play();
-      } catch (err) {
-        console.log("Audio blocked:", err);
-      }
+    audio.play().catch((err) => {
+      console.log("Audio error:", err);
+    });
 
-      // fallback: pakai durasi audio
-      const duration = audio.duration || 10;
-
-      setTimeout(() => {
-        setPage("meditation");
-      }, duration * 1000);
+    audio.onended = () => {
+      setPage("meditation");
     };
-
-    playAndNavigate();
-
-    return () => {
-      audio.pause();
-    };
-  }, [setPage, audioRef]);
+  };
 
   return (
     <div
       className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden"
       style={{
-        backgroundImage: "url('/backgrounds/forest.jpg')",
+        backgroundImage: "url('/backgrounds/sky.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
+      {/* overlay */}
       <div className="absolute inset-0 bg-black/40"></div>
 
-      <div className="relative text-center max-w-lg text-white">
+      {/* CARD */}
+      <div className="relative text-center max-w-md w-full text-white">
 
-        <div className="text-5xl mb-4 animate-pulse">
-          🌬️
-        </div>
+        <div className="bg-white/10 border border-white/20 backdrop-blur-md rounded-3xl p-6 shadow-xl">
 
-        <h1 className="text-3xl font-semibold">
-          Releasing…
-        </h1>
+          {/* ICON */}
+          <div className="text-4xl mb-3 animate-pulse">
+            🌬️
+          </div>
 
-        <div className="mt-6 bg-white/10 border border-white/20 rounded-2xl p-6 backdrop-blur-md">
-          <p className="text-white/90 text-sm">
-            {message || "Lepaskan semuanya…"}
+          {/* TITLE */}
+          <h1 className="text-2xl font-semibold mb-1">
+            Release Space
+          </h1>
+
+          <p className="text-white/70 text-xs mb-4">
+            Lepaskan semua pikiranmu dengan tenang
           </p>
-        </div>
 
-        <p className="mt-5 text-white/60 text-xs">
-          Proses berjalan otomatis…
-        </p>
+          {/* MESSAGE BOX (FIX OVERFLOW) */}
+          <div className="bg-white/10 border border-white/20 rounded-xl p-4 mb-5 max-h-40 overflow-y-auto">
+            <p className="text-sm text-white/90 break-words leading-relaxed">
+              {message || "Tidak ada pesan"}
+            </p>
+          </div>
+
+          {/* BUTTON / STATUS */}
+          {!started ? (
+            <button
+              onClick={startRelease}
+              className="px-5 py-2.5 bg-white text-black rounded-xl text-sm font-medium hover:bg-white/90 transition"
+            >
+              Start Release 🌿
+            </button>
+          ) : (
+            <p className="text-white/60 text-sm animate-pulse">
+              Releasing your thoughts...
+            </p>
+          )}
+
+        </div>
 
       </div>
     </div>
