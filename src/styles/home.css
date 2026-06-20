@@ -1,73 +1,110 @@
-/* BASE */
 .home {
-  height: 100vh;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  font-family: sans-serif;
+height: 100vh;
+width: 100%;
+position: relative;
+overflow: hidden;
+font-family: "Poppins", sans-serif;
 }
 
-/* BACKGROUND */
+/* Background */
 .home-bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  transform: scale(1.5);
-  transition: background-image 4s ease-in-out;
-  }
+position: absolute;
+inset: 0;
 
-/* OVERLAY SOFT */
+background-size: cover;
+background-position: center;
+
+transform: scale(1.05);
+
+transition: background-image 1.5s ease-in-out;
+}
+
+/* Overlay */
 .home-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.38);
+position: absolute;
+inset: 0;
+background: rgba(0, 0, 0, 0.35);
+z-index: 1;
 }
 
-/* CONTENT */
+/* Content */
 .home-content {
-  position: relative;
-  z-index: 2;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+position: relative;
+z-index: 2;
 
-  text-align: center;
-  color: white;
-  padding: 20px;
+height: 100%;
+
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+text-align: center;
+color: white;
+
+padding: 20px;
 }
 
-/* MEDITATION SPACE */
+/* Meditation Space */
 .home-kicker {
-  font-size: 35px;
-  letter-spacing: 4px;
-  opacity: 0.75;
+font-size: 50px;
+font-weight: 600;
+
+margin-bottom: 16px;
+
+text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
 }
 
-/* MAIN TEXT (INI YANG KAMU SUKA) */
-.home-desc.main-text {
-  margin-top: 14px;
-  font-size: 11px;
-  line-height: 1.1;
-  max-width: 250px;
-  font-weight: 400;
+/* Kalimat utama */
+.main-text {
+font-size: 15px;
+font-weight: 500;
+
+max-width: 420px;
+
+line-height: 1.7;
+
+text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
 }
 
-/* BUTTON */
+/* Button */
 .home-btn {
-  margin-top: 26px;
-  padding: 12px 26px;
-  border-radius: 999px;
-  border: none;
-  background: rgba(255,255,255,0.95);
-  color: black;
-  font-size: 13px;
-  cursor: pointer;
-  transition: 0.3s ease;
+margin-top: 30px;
+
+padding: 12px 28px;
+
+border: none;
+border-radius: 999px;
+
+background: rgba(255, 255, 255, 0.95);
+color: #222;
+
+font-size: 14px;
+font-weight: 600;
+
+cursor: pointer;
+
+transition: all 0.3s ease;
 }
 
 .home-btn:hover {
-  transform: scale(1.05);
+transform: translateY(-2px);
+background: white;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+.home-kicker {
+font-size: 16px;
+}
+
+.main-text {
+font-size: 20px;
+max-width: 320px;
+}
+
+.home-btn {
+font-size: 13px;
+padding: 11px 24px;
+}
 }

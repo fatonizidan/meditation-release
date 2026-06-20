@@ -11,26 +11,34 @@ export default function Home({ setPage }) {
 
   const [bg, setBg] = useState(0);
 
+  // preload gambar
+  useEffect(() => {
+    backgrounds.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setBg((prev) => (prev + 1) % backgrounds.length);
-    }, 6000);
+    }, 8000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="home">
-
       <div
         className="home-bg"
-        style={{ backgroundImage: `url(${backgrounds[bg]})` }}
+        style={{
+          backgroundImage: `url(${backgrounds[bg]})`,
+        }}
       />
 
       <div className="home-overlay" />
 
       <div className="home-content">
-
         <p className="home-kicker">
           Meditation Space 🌿
         </p>
@@ -45,9 +53,7 @@ export default function Home({ setPage }) {
         >
           Begin Your Journey
         </button>
-
       </div>
-
     </div>
   );
 }
