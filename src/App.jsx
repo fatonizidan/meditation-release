@@ -10,89 +10,92 @@ import Navbar from "./components/Navbar";
 import Data from "./pages/Data";
 
 export default function App() {
-  // 🔐 LOGIN STATE (WAJIB DIPISAH DARI PAGE)
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+// 🔐 LOGIN STATE
+const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // 📄 PAGE SYSTEM (NAVIGASI UTAMA)
-  const [page, setPage] = useState("home");
+// 📄 PAGE STATE
+const [page, setPage] = useState("home");
 
-  // ✍️ DATA REFLECTION
-  const [message, setMessage] = useState("");
+// ✍️ MESSAGE STATE
+const [message, setMessage] = useState("");
 
-  // 🎧 AUDIO GLOBAL SYSTEM
-  const audioRef = useRef(null);
+// 🎧 AUDIO REF
+const audioRef = useRef(null);
 
-  if (!audioRef.current) {
-    audioRef.current = {
-      ambient: new Audio("/sounds/ambient.mp3"),
-      drop: new Audio("/sounds/drop.mp3"),
-    };
+// 🔥 INIT AUDIO (FIX VERCEL SAFE)
+useEffect(() => {
+audioRef.current = {
+ambient: new Audio("/sounds/ambient.mp3"),
+drop: new Audio("/sounds/drop.mp3"),
+};
 
-    audioRef.current.ambient.loop = true;
-    audioRef.current.ambient.volume = 0.4;
+audioRef.current.ambient.loop = true;
+audioRef.current.ambient.volume = 0.4;
+audioRef.current.ambient.preload = "auto";
 
-    audioRef.current.drop.loop = false;
-    audioRef.current.drop.volume = 0.6;
-  }
+audioRef.current.drop.loop = false;
+audioRef.current.drop.volume = 0.6;
+audioRef.current.drop.preload = "auto";
 
-  // 🔥 AUTO STOP SEMUA AUDIO KETIKA PINDAH PAGE
-  useEffect(() => {
-    const ambient = audioRef.current.ambient;
-    const drop = audioRef.current.drop;
+}, []);
 
-    ambient.pause();
-    ambient.currentTime = 0;
+// 🔇 STOP AUDIO TIAP GANTI PAGE
+useEffect(() => {
+if (!audioRef.current) return;
 
-    drop.pause();
-    drop.currentTime = 0;
-  }, [page]);
+const { ambient, drop } = audioRef.current;
 
-  // 🔐 LOGIN SCREEN (PASTI INI YANG MUNCUL DULU)
-  if (!isLoggedIn) {
-    return <Login setIsLoggedIn={setIsLoggedIn} />;
-  }
+ambient.pause();
+ambient.currentTime = 0;
 
-  return (
-    <div className="app-container">
+drop.pause();
+drop.currentTime = 0;
 
-      {/* NAVBAR */}
-      <Navbar setPage={setPage} />
+}, [page]);
 
-      {/* PAGES SYSTEM */}
-      {page === "home" && (
-        <Home setPage={setPage} />
-      )}
+// 🔐 LOGIN SCREEN
+if (!isLoggedIn) {
+return <Login setIsLoggedIn={setIsLoggedIn} />;
+}
 
-      {page === "reflection" && (
-        <Reflection
-          setPage={setPage}
-          setMessage={setMessage}
-        />
-      )}
+return (
+<div className="app-container">
 
-      {page === "release" && (
-        <Release
-          message={message}
-          setPage={setPage}
-          audioRef={audioRef}
-        />
-      )}
+  {/* NAVBAR */}
+  <Navbar setPage={setPage} />
 
-      {page === "meditation" && (
-        <Meditation
-          audioRef={audioRef}
-          setPage={setPage}
-        />
-      )}
+  {/* PAGES */}
+  {page === "home" && (
+    <Home setPage={setPage} audioRef={audioRef} />
+  )}
 
-      {page === "about" && (
-        <About />
-      )}
+  {page === "reflection" && (
+    <Reflection
+      setPage={setPage}
+      setMessage={setMessage}
+    />
+  )}
 
-      {page === "data" && (
-        <Data />
-      )}
+  {page === "release" && (
+    <Release
+      message={message}
+      setPage={setPage}
+      audioRef={audioRef}
+    />
+  )}
 
-    </div>
-  );
+  {page === "meditation" && (
+    <Meditation
+      audioRef={audioRef}
+      setPage={setPage}
+    />
+  )}
+
+  {page === "about" && <About />}
+
+  {page === "data" && <Data />}
+
+</div>
+
+);
 }
