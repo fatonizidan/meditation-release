@@ -34,12 +34,20 @@ export default function Navbar({ setPage }) {
           </button>
 
           <button
+           onClick={() => setPage("data")}
+           className="text-white hover:text-cyan-300 transition duration-300"
+          >
+            Data
+          </button>
+
+
+          <button
             onClick={() => setPage("about")}
             className="text-white hover:text-cyan-300 transition duration-300"
           >
             About
           </button>
-
+          
         </div>
       </div>
     </nav>

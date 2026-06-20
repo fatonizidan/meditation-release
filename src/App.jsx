@@ -7,6 +7,7 @@ import Release from "./pages/Release";
 import Meditation from "./pages/Meditation";
 import About from "./pages/About";
 import Navbar from "./components/Navbar";
+import Data from "./pages/Data";
 
 export default function App() {
   // 🔐 LOGIN STATE (WAJIB DIPISAH DARI PAGE)
@@ -86,6 +87,10 @@ export default function App() {
 
       {page === "about" && (
         <About />
+      )}
+
+      {page === "data" && (
+        <Data />
       )}
 
     </div>

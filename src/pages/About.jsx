@@ -1,48 +1,38 @@
 export default function About() {
-  return (
-    <div className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
+return (
+<div className="h-screen bg-slate-900 text-white flex items-center justify-center px-6">
 
-      {/* soft gradient background */}
-      <div className="absolute inset-0 bg-linear-to-br from-sky-100 via-indigo-100 to-purple-100"></div>
+  <div className="max-w-2xl text-center">
 
-      {/* CONTENT CARD */}
-      <div className="relative bg-white-500/60 backdrop-blur-md border border-blue-400 shadow-xl rounded-3xl p-8 max-w-2xl text-center">
-
-        {/* ICON */}
-        <div className="text-4xl mb-3">
-          🌿
-        </div>
-
-        {/* TITLE */}
-        <h1 className="text-3xl font-semibold text-slate-700">
-          About Meditation Release
-        </h1>
-
-        {/* DESCRIPTION */}
-        <p className="mt-5 text-slate-600 text-sm leading-relaxed">
-          Meditation Release adalah ruang sederhana untuk membantu kamu
-          menenangkan pikiran, menulis perasaan, dan melepaskan beban
-          melalui proses yang lembut dan tenang.
-        </p>
-
-        <p className="mt-4 text-slate-600 text-sm leading-relaxed">
-          Setiap langkah di dalam aplikasi ini dirancang untuk membawa
-          kamu kembali pada ketenangan diri, tanpa tekanan, tanpa terburu-buru.
-        </p>
-
-        {/* FEATURES */}
-        <div className="mt-6 text-left text-slate-600 text-sm space-y-2">
-          <p>✍️ Reflection : menulis isi hati</p>
-          <p>🌬️ Release : melepaskan emosi</p>
-          <p>🧘 Meditation : kembali ke ketenangan</p>
-        </div>
-
-        {/* FOOTER */}
-        <p className="mt-6 text-xs text-slate-400">
-          Dibuat dengan React sebagai ruang kecil untuk ketenangan.
-        </p>
-
-      </div>
+    <div className="text-2xl mb-6">
+      🌿
     </div>
-  );
+
+    <h1 className="text-4xl font-light mb-4">
+      About Meditation Release
+    </h1>
+
+    <p className="text-slate-300 text-lg leading-relaxed">
+      Meditation Release dibuat sebagai ruang sederhana untuk membantu
+      seseorang berhenti sejenak dari kesibukan, menuliskan isi pikiran,
+      melepaskan beban yang dirasakan, dan kembali menemukan ketenangan.
+    </p>
+
+    <div className="w-20 h-px bg-white/20 mx-auto my-8"></div>
+
+    <p className="text-slate-400 italic leading-relaxed">
+      "Terkadang kita tidak membutuhkan jawaban untuk semua hal.
+      Kita hanya membutuhkan ruang untuk bernapas, menerima,
+      dan melepaskan."
+    </p>
+
+    <div className="mt-10 text-slate-500 text-sm">
+      Meditation Release • React JS Project
+    </div>
+
+  </div>
+
+</div>
+
+);
 }
