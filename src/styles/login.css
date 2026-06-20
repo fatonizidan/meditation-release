@@ -1,103 +1,101 @@
 .login-container {
-min-height: 100vh;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-display: flex;
-justify-content: center;
-align-items: center;
-
-background: #0f172a;
-padding: 20px;
+  background: #0f172a;
+  padding: 16px;
 }
 
 /* CARD */
 .login-card {
-width: 100%;
-max-width: 420px;
+  width: 100%;
+  max-width: 380px; /* lebih kecil biar HP enak */
 
-background: rgba(255, 255, 255, 0.05);
-backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
 
-border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
 
-border-radius: 24px;
-padding: 40px;
+  padding: 28px; /* diperkecil dari 40 */
 
-text-align: center;
+  text-align: center;
 
-box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
 }
 
 /* TITLE */
 .login-title {
-font-size: 30px;
-font-weight: 300;
-color: white;
+  font-size: 22px; /* responsive lebih aman */
+  font-weight: 400;
+  color: white;
 }
 
 /* SUBTITLE */
 .login-subtitle {
-margin-top: 8px;
-margin-bottom: 24px;
+  margin-top: 6px;
+  margin-bottom: 18px;
 
-color: #94a3b8;
-font-size: 14px;
+  color: #94a3b8;
+  font-size: 13px;
 }
 
 /* INPUT */
 .login-input {
-width: 100%;
+  width: 100%;
+  padding: 12px 14px;
 
-padding: 14px 16px;
-margin-top: 12px;
+  margin-top: 10px;
 
-border-radius: 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 
-border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
 
-background: rgba(255, 255, 255, 0.05);
+  font-size: 13px;
+  outline: none;
 
-color: white;
-font-size: 14px;
-
-outline: none;
-transition: 0.3s;
+  transition: 0.3s;
 }
 
 .login-input::placeholder {
-color: #94a3b8;
+  color: #94a3b8;
 }
 
 .login-input:focus {
-border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 /* BUTTON */
 .login-button {
-width: 100%;
+  width: 100%;
+  margin-top: 16px;
 
-margin-top: 18px;
-padding: 14px;
+  padding: 12px;
 
-border: none;
-border-radius: 14px;
+  border: none;
+  border-radius: 12px;
 
-background: white;
-color: #0f172a;
+  background: white;
+  color: #0f172a;
 
-font-weight: 600;
-cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
 
-transition: 0.3s;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .login-button:hover {
-transform: translateY(-2px);
+  transform: translateY(-2px);
 }
 
 /* ERROR */
 .login-error {
-margin-top: 10px;
-
-color: #fca5a5;
-font-size: 13px;
+  margin-top: 8px;
+  color: #fca5a5;
+  font-size: 12px;
 }

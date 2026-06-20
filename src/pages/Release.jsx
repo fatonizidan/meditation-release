@@ -22,7 +22,7 @@ export default function Release({ message, setPage, audioRef }) {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center px-4 text-white relative overflow-hidden"
       style={{
         backgroundImage: "url('/backgrounds/sky.jpg')",
         backgroundSize: "cover",
@@ -32,28 +32,28 @@ export default function Release({ message, setPage, audioRef }) {
       {/* overlay */}
       <div className="absolute inset-0 bg-black/40"></div>
 
-      {/* CARD */}
-      <div className="relative text-center max-w-md w-full text-white">
+      {/* CARD CONTAINER */}
+      <div className="relative w-full max-w-md sm:max-w-lg text-center">
 
-        <div className="bg-white/10 border border-white/20 backdrop-blur-md rounded-3xl p-6 shadow-xl">
+        <div className="bg-white/10 border border-white/20 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl space-y-3">
 
           {/* ICON */}
-          <div className="text-4xl mb-3 animate-pulse">
+          <div className="text-3xl sm:text-4xl animate-pulse">
             🌬️
           </div>
 
           {/* TITLE */}
-          <h1 className="text-2xl font-semibold mb-1">
+          <h1 className="text-xl sm:text-2xl font-semibold">
             Release Space
           </h1>
 
-          <p className="text-white/70 text-xs mb-4">
+          <p className="text-white/70 text-xs sm:text-sm">
             Lepaskan semua pikiranmu dengan tenang
           </p>
 
-          {/* MESSAGE BOX (FIX OVERFLOW) */}
-          <div className="bg-white/10 border border-white/20 rounded-xl p-4 mb-5 max-h-40 overflow-y-auto">
-            <p className="text-sm text-white/90 break-words leading-relaxed">
+          {/* MESSAGE BOX */}
+          <div className="bg-white/10 border border-white/20 rounded-xl p-3 sm:p-4 max-h-36 sm:max-h-40 overflow-y-auto">
+            <p className="text-sm sm:text-base text-white/90 break-words leading-relaxed">
               {message || "Tidak ada pesan"}
             </p>
           </div>
@@ -62,7 +62,7 @@ export default function Release({ message, setPage, audioRef }) {
           {!started ? (
             <button
               onClick={startRelease}
-              className="px-5 py-2.5 bg-white text-black rounded-xl text-sm font-medium hover:bg-white/90 transition"
+              className="w-full sm:w-auto px-5 py-2.5 bg-white text-black rounded-xl text-sm sm:text-base font-medium hover:bg-white/90 transition"
             >
               Start Release 🌿
             </button>
@@ -75,6 +75,7 @@ export default function Release({ message, setPage, audioRef }) {
         </div>
 
       </div>
+
     </div>
   );
 }
